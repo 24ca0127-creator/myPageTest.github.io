@@ -7,7 +7,7 @@
     <style>
         /* --- 变量与全局设置 --- */
         :root {
-            --brand-red: #d51b21;
+            --brand-red: #cb0a1d;
             --deep-gray: #121212;
             --brand-beige: #e8dfdf;
             --header-height: 80px;
@@ -97,7 +97,6 @@
             overflow: hidden;
         }
 
-        /* 添加波浪动态背景层 */
         .site-header::before {
             content: '';
             position: absolute;
@@ -267,7 +266,6 @@
             overflow: visible;
         }
 
-        /* 新增的Recruit标签 */
         .recruit-label {
             position: absolute;
             top: 120px;
@@ -320,7 +318,6 @@
             will-change: opacity, transform;
         }
         
-        /* 修复曲线背景 */
         .title-background {
             position: absolute;
             background: linear-gradient(135deg, 
@@ -360,45 +357,101 @@
             text-shadow: 0px 5px 20px rgba(0, 0, 0, 0.8);
         }
         
-        /* --- 浮动卡片通用样式（修改这里） --- */
-.floating-card {
-    background: rgba(232, 223, 223, 0.85); /* 这里的 0.85 代表 85% 不透明，会挡住动画 */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 50px 60px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    z-index: 10;
-    margin-top: -25vh;
-    margin-bottom: -40vh;
-    will-change: opacity, transform;
-    overflow: hidden; /* 2. 关键：防止伪元素动画溢出卡片的圆角 */
-}
+        /* === 全面修正后的卡片样式 === */
 
-/* 为每个卡片添加动态背景（修改这里） */
-.floating-card::before {
-    content: '';
-    position: absolute;
-    top: -50%; /* 确保能覆盖整个卡片区域 */
-    left: -25%;
-    width: 150%;
-    height: 200%;
-    /* 关键：应用和主标题背景一样的样式 */
-    background: linear-gradient(135deg, 
-                rgba(232, 223, 223, 0.25) 0%, /* 调整了透明度以适应白色背景 */
-                rgba(232, 223, 223, 0.40) 100%);
-    border-radius: 30% 70% 40% 60% / 60% 40% 60% 40%;
-    animation: morphing 15s linear infinite; /* 应用morphing动画 */
-    z-index: -1; /* 关键：将这个背景层放在卡片内容的后面 */
-}
+        .floating-card {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+            margin-top: -25vh;
+            margin-bottom: -40vh;
+            will-change: opacity, transform;
+        }
         
         .floating-card.is-visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .card-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            /* overflow: hidden;  */
+        }
+
+        .card-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(135deg, 
+                    rgba(232, 223, 223, 0.25) 0%,
+                    rgba(232, 223, 223, 0.40) 100%),
+                rgba(232, 223, 223, 0.85);
+            border-radius: inherit; 
+            animation: morphing 10s linear infinite;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 50px 60px;
+        }
+
+        #message-card {
+            animation: float 6s ease-in-out infinite;
+        }
+        #message-card .card-background {
+            border-radius: 25% 75% 30% 70% / 70% 25% 75% 25%;
+        }
+        #message-card .card-background::before {
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        #interview-card {
+            animation: float 6s ease-in-out infinite 1s;
+        }
+        #interview-card .card-background {
+            border-radius: 75% 25% 80% 20% / 30% 70% 30% 70%;
+        }
+        #interview-card .card-background::before {
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+
+        #profile-card {
+            animation: float 6s ease-in-out infinite 2s;
+        }
+        #profile-card .card-background {
+            border-radius: 20% 80% 30% 70% / 75% 25% 70% 30%;
+        }
+        #profile-card .card-background::before {
+            animation-duration: 14s;
+            animation-delay: 0.5s;
+        }
+
+        #entry-card {
+            animation: float 6s ease-in-out infinite 3s;
+        }
+        #entry-card .card-background {
+            border-radius: 70% 30% 75% 25% / 30% 70% 25% 75%;
+        }
+        #entry-card .card-background::before {
+            animation-duration: 11s;
+            animation-delay: 1.5s;
         }
         
         .section-title {
@@ -417,50 +470,6 @@
             background-color: var(--brand-beige);
             width: 80px; 
             margin-top: 10px;
-        }
-        
-        /* --- 各个卡片的独特形状 --- */
-        #message-card {
-            border-radius: 25% 75% 30% 70% / 70% 25% 75% 25%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: 0;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        #message-card::before {
-            animation-duration: 12s;
-            animation-delay: 0s;
-        }
-        
-        #interview-card {
-            border-radius: 75% 25% 80% 20% / 30% 70% 30% 70%;
-            animation: float 6s ease-in-out infinite 1s;
-        }
-
-        #interview-card::before {
-            animation-duration: 14s;
-            animation-delay: 2s;
-        }
-        
-        #profile-card {
-            border-radius: 20% 80% 30% 70% / 75% 25% 70% 30%;
-            animation: float 6s ease-in-out infinite 2s;
-        }
-
-        #profile-card::before {
-            animation-duration: 16s;
-            animation-delay: 4s;
-        }
-        
-        #entry-card {
-            border-radius: 70% 30% 75% 25% / 30% 70% 25% 75%;
-            animation: float 6s ease-in-out infinite 3s;
-        }
-
-        #entry-card::before {
-            animation-duration: 13s;
-            animation-delay: 1s;
         }
         
         .message-box h3 {
@@ -604,8 +613,7 @@
             font-family: 'NotoSansBold', sans-serif;
         }
 
-        /* --- Entry Section --- */
-        #entry-card { 
+        #entry-card .entry-box { 
             text-align: center; 
         }
         
@@ -734,8 +742,10 @@
         }
         
         @media (max-width: 768px) {
-            .floating-card { 
+            .card-content {
                 padding: 30px; 
+            }
+            .floating-card {
                 margin-top: -20vh; 
             }
             .footer-content { flex-direction: column; }
@@ -790,7 +800,6 @@
     <main>
         <section id="hero" class="section">
             <img src="001.jpg" alt="Ways to Work Fun - 楽しむ、働き方。" class="section-background-image">
-            <!-- 新增Recruit标签 -->
             <div class="recruit-label">
                 <h3>Recruit</h3>
                 <p>採用ホームページ</p>
@@ -810,15 +819,18 @@
 
         <section class="content-section">
             <div class="content-container">
-                <div id="message-card" class="floating-card message-box">
-                    <h2 class="section-title">Message<hr></h2>
-                    <h3>共に世界へ挑戦してくださる仲間を求めています</h3>
-                    <p>
-                        アイエンターが採用において最も重視するのが「理念共感性」です。
-                        経営理念とは会社の根幹をなすものであり、ありとあらゆる戦略やパフォーマンスの軸となるもの。
-                        "楽しむことを世界に広める"というビジョンに向けて日々挑戦すること、日々楽しむこと、
-                        新しい感動やワクワクを仕掛けることが最高のパフォーマンスにつながると考えています。
-                    </p>
+                <div id="message-card" class="floating-card">
+                    <div class="card-background"></div>
+                    <div class="card-content message-box">
+                        <h2 class="section-title">Message<hr></h2>
+                        <h3>共に世界へ挑戦してくださる仲間を求めています</h3>
+                        <p>
+                            アイエンターが採用において最も重視するのが「理念共感性」です。
+                            経営理念とは会社の根幹をなすものであり、ありとあらゆる戦略やパフォーマンスの軸となるもの。
+                            "楽しむことを世界に広める"というビジョンに向けて日々挑戦すること、日々楽しむこと、
+                            新しい感動やワクワクを仕掛けることが最高のパフォーマンスにつながると考えています。
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -829,33 +841,36 @@
 
         <section class="content-section">
             <div class="content-container">
-                <div id="interview-card" class="floating-card interview-box">
-                    <h2 class="section-title">楽しむのカタチ<hr></h2>
-                    <div class="interview-grid">
-                        <a href="https://www.i-enter.co.jp/recruit/interview/4/" class="interview-card">
-                            <img src="004.jpg" alt="須見 祐介">
-                            <div class="interview-card-content">
-                                <p class="member-year">2018年 新卒入社</p>
-                                <p class="member-name">須見 祐介 <span>YUSUKE SUSAMI</span></p>
-                                <p class="member-group">DXP事業本部　マリンテック事業部</p>
-                            </div>
-                        </a>
-                        <a href="https://www.i-enter.co.jp/recruit/interview/2/" class="interview-card">
-                            <img src="005.jpg" alt="遠藤 由奈">
-                            <div class="interview-card-content">
-                                <p class="member-year">2017年 新卒入社</p>
-                                <p class="member-name">遠藤 由奈 <span>YUINA ENDO</span></p>
-                                <p class="member-group">テクノロジー本部　プロジェクト推進ユニット</p>
-                            </div>
-                        </a>
-                        <a href="https://www.i-enter.co.jp/recruit/interview/3/" class="interview-card">
-                            <img src="003.jpg" alt="直井 俊樹">
-                            <div class="interview-card-content">
-                                <p class="member-year">2013年 新卒入社</p>
-                                <p class="member-name">直井 俊樹 <span>TOSHIKI NAOI</span></p>
-                                <p class="member-group">テクノロジー本部　Webアプリユニット</p>
-                            </div>
-                        </a>
+                <div id="interview-card" class="floating-card">
+                    <div class="card-background"></div>
+                    <div class="card-content interview-box">
+                        <h2 class="section-title">楽しむのカタチ<hr></h2>
+                        <div class="interview-grid">
+                            <a href="https://www.i-enter.co.jp/recruit/interview/4/" class="interview-card">
+                                <img src="004.jpg" alt="須見 祐介">
+                                <div class="interview-card-content">
+                                    <p class="member-year">2018年 新卒入社</p>
+                                    <p class="member-name">須見 祐介 <span>YUSUKE SUSAMI</span></p>
+                                    <p class="member-group">DXP事業本部　マリンテック事業部</p>
+                                </div>
+                            </a>
+                            <a href="https://www.i-enter.co.jp/recruit/interview/2/" class="interview-card">
+                                <img src="005.jpg" alt="遠藤 由奈">
+                                <div class="interview-card-content">
+                                    <p class="member-year">2017年 新卒入社</p>
+                                    <p class="member-name">遠藤 由奈 <span>YUINA ENDO</span></p>
+                                    <p class="member-group">テクノロジー本部　プロジェクト推進ユニット</p>
+                                </div>
+                            </a>
+                            <a href="https://www.i-enter.co.jp/recruit/interview/3/" class="interview-card">
+                                <img src="003.jpg" alt="直井 俊樹">
+                                <div class="interview-card-content">
+                                    <p class="member-year">2013年 新卒入社</p>
+                                    <p class="member-name">直井 俊樹 <span>TOSHIKI NAOI</span></p>
+                                    <p class="member-group">テクノロジー本部　Webアプリユニット</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -867,43 +882,46 @@
         
         <section class="content-section">
             <div class="content-container">
-                <div id="profile-card" class="floating-card profile-box">
-                    <h2 class="section-title">募集コース一覧<hr></h2>
-                    <p class="sub-header">各コースの応募方法についてはコース詳細の「募集コースの選択方法」の欄をご確認ください。</p>
-                    
-                    <div class="job-listing">
-                        <div class="job-header">
-                            <span class="job-tag">正社員</span>
-                            <h3 class="job-title">DXコンサルタント職</h3>
+                <div id="profile-card" class="floating-card">
+                    <div class="card-background"></div>
+                    <div class="card-content profile-box">
+                        <h2 class="section-title">募集コース一覧<hr></h2>
+                        <p class="sub-header">各コースの応募方法についてはコース詳細の「募集コースの選択方法」の欄をご確認ください。</p>
+                        
+                        <div class="job-listing">
+                            <div class="job-header">
+                                <span class="job-tag">正社員</span>
+                                <h3 class="job-title">DXコンサルタント職</h3>
+                            </div>
+                            <div class="job-locations">
+                                <strong>勤務地</strong>
+                                <span class="location-tag">東京都</span>
+                                <span class="location-tag">大阪府</span>
+                            </div>
+                            <p class="job-description">
+                                お客様の課題をヒアリングし、課題解決のためのDXコンサルティング営業やシステム開発提案、自社サービスの導入提案をおこないます。会社の成長にダイレクトにかかわることができます。
+                            </p>
+                            <div class="job-status">正社員応募受付終了</div>
                         </div>
-                        <div class="job-locations">
-                            <strong>勤務地</strong>
-                            <span class="location-tag">東京都</span>
-                            <span class="location-tag">大阪府</span>
-                        </div>
-                        <p class="job-description">
-                            お客様の課題をヒアリングし、課題解決のためのDXコンサルティング営業やシステム開発提案、自社サービスの導入提案をおこないます。会社の成長にダイレクトにかかわることができます。
-                        </p>
-                        <div class="job-status">正社員応募受付終了</div>
-                    </div>
 
-                    <div class="job-listing">
-                        <div class="job-header">
-                            <span class="job-tag">正社員</span>
-                            <h3 class="job-title">システムエンジニア職</h3>
+                        <div class="job-listing">
+                            <div class="job-header">
+                                <span class="job-tag">正社員</span>
+                                <h3 class="job-title">システムエンジニア職</h3>
+                            </div>
+                            <div class="job-locations">
+                                <strong>勤務地</strong>
+                                <span class="location-tag">北海道</span>
+                                <span class="location-tag">宮城県</span>
+                                <span class="location-tag">東京都</span>
+                                <span class="location-tag">大阪府</span>
+                                <span class="location-tag">福岡県</span>
+                                <span class="location-tag">沖縄県</span>
+                            </div>
+                            <p class="job-description">
+                                Web・業務系アプリ開発やスマホアプリ開発、クラウドの設計構築、RPA・ノーコード/ローコード開発などをおこないます。最先端技術(AI、IoT、XR)の研究開発をおこなうチームもございます。
+                            </p>
                         </div>
-                        <div class="job-locations">
-                            <strong>勤務地</strong>
-                            <span class="location-tag">北海道</span>
-                            <span class="location-tag">宮城県</span>
-                            <span class="location-tag">東京都</span>
-                            <span class="location-tag">大阪府</span>
-                            <span class="location-tag">福岡県</span>
-                            <span class="location-tag">沖縄県</span>
-                        </div>
-                        <p class="job-description">
-                            Web・業務系アプリ開発やスマホアプリ開発、クラウドの設計構築、RPA・ノーコード/ローコード開発などをおこないます。最先端技術(AI、IoT、XR)の研究開発をおこなうチームもございます。
-                        </p>
                     </div>
                 </div>
             </div>
@@ -915,14 +933,17 @@
 
         <section class="content-section">
             <div class="content-container">
-                <div id="entry-card" class="floating-card entry-box">
-                    <div class="link-logo">
-                        <img src="https://www.i-enter.co.jp/recruit/img/recruit_copy_logo.svg" alt="Let's have fun.">
-                        <p class="link-sub-title">楽しむを世界へ</p>
-                    </div>
-                    <div class="button-container">
-                        <a href="https://job.mynavi.jp/26/pc/search/corp72594/outline.html" target="_blank" rel="noopener noreferrer" class="recruit-btn">新卒採用</a>
-                        <a href="https://www.i-enter.co.jp/recruit/mid-career/" class="recruit-btn">キャリア採用</a>
+                <div id="entry-card" class="floating-card">
+                    <div class="card-background"></div>
+                    <div class="card-content entry-box">
+                        <div class="link-logo">
+                            <img src="https://www.i-enter.co.jp/recruit/img/recruit_copy_logo.svg" alt="Let's have fun.">
+                            <p class="link-sub-title">楽しむを世界へ</p>
+                        </div>
+                        <div class="button-container">
+                            <a href="https://job.mynavi.jp/26/pc/search/corp72594/outline.html" target="_blank" rel="noopener noreferrer" class="recruit-btn">新卒採用</a>
+                            <a href="https://www.i-enter.co.jp/recruit/mid-career/" class="recruit-btn">キャリア採用</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -969,19 +990,15 @@
             let lastScrollY = 0;
             let ticking = false;
 
-            // 优化的滚动处理
             function updateOnScroll() {
                 const scrollY = window.scrollY;
                 
-                // Header滚动效果 - 更流畅的过渡
                 if (scrollY > 80) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
-                    header.style.backgroundColor = '';
                 }
 
-                // Hero文字渐隐效果 - 更流畅
                 if(heroTextContainer && scrollY < window.innerHeight) {
                     const progress = scrollY / (window.innerHeight * 0.5);
                     const opacity = Math.max(0, 1 - progress);
@@ -991,7 +1008,6 @@
                     heroTextContainer.style.transform = `translateY(${translateY}px)`;
                 }
 
-                // Recruit标签渐隐效果
                 if(recruitLabel && scrollY < window.innerHeight) {
                     const progress = scrollY / (window.innerHeight * 0.5);
                     const opacity = Math.max(0, 1 - progress);
@@ -1005,7 +1021,6 @@
                 ticking = false;
             }
             
-            // 使用 requestAnimationFrame 优化滚动性能
             function requestTick() {
                 if (!ticking) {
                     window.requestAnimationFrame(updateOnScroll);
@@ -1015,7 +1030,6 @@
             
             window.addEventListener('scroll', requestTick, { passive: true });
 
-            // 浮动卡片入场动画 - 优化的 Intersection Observer
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -1025,7 +1039,6 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // 添加轻微延迟以确保动画流畅
                         setTimeout(() => {
                             entry.target.classList.add('is-visible');
                         }, 100);
@@ -1037,7 +1050,6 @@
                 observer.observe(card);
             });
 
-            // 初始化
             updateOnScroll();
         });
     </script>
