@@ -54,10 +54,10 @@
             50% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateX(-10px) translateY(5px); }
             75% { border-radius: 70% 30% 60% 40% / 40% 60% 40% 60%; transform: translateX(3px) translateY(-2px); }
         }
-        @keyframes headerMorphing {
-            0%, 100% { border-radius: 20% 80% 30% 70% / 70% 30% 70% 30%; }
-            33% { border-radius: 80% 20% 70% 30% / 30% 70% 30% 70%; }
-            66% { border-radius: 30% 70% 20% 80% / 80% 20% 80% 20%; }
+        @keyframes wave-animation {
+            0% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 75% 85%, 50% 95%, 25% 85%, 0% 100%); }
+            50% { clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 75% 95%, 50% 85%, 25% 95%, 0% 85%); }
+            100% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 75% 85%, 50% 95%, 25% 85%, 0% 100%); }
         }
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -76,23 +76,192 @@
         .site-header {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             padding: 0 20px; box-sizing: border-box; height: var(--header-height);
-            overflow: hidden; transition: background-color 0.3s ease;
+            overflow: visible;
+            transition: background-color 0.3s ease;
         }
         .site-header::before {
-            content: ''; position: absolute; top: -50%; left: -10%;
-            width: 120%; height: 200%;
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
             background: linear-gradient(135deg, rgba(18, 18, 18, 0.7) 0%, rgba(18, 18, 18, 0.5) 100%);
-            border-radius: 20% 80% 30% 70% / 70% 30% 70% 30%;
-            animation: headerMorphing 12s linear infinite; z-index: -1;
-            transition: opacity 0.3s ease;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: -1;
+            /* 新增波浪形和动画 */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 75% 85%, 50% 95%, 25% 85%, 0% 100%);
+            animation: wave-animation 8s ease-in-out infinite;
         }
-        .site-header.scrolled::before {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
-        }
-        .site-header::after {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; backdrop-filter: blur(10px); z-index: -1;
-        }
+ 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+/* --- 最终 Entry Section 设计 (V4 - 布局修正版) --- */
+
+/* 1. 位置控制 (已修正) */
+#entry-section {
+    position: relative; /* 仅保留这行，为内部绝对定位提供基准 */
+    line-height: 1;   /* 继承自原有的 .section 样式 */
+}
+#entry-section .content-container {
+    position: absolute;
+    top: 55%; /* 您可以继续在这里微调垂直位置 */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1100px;
+}
+
+/* 2. Entry 卡片专属样式 */
+#entry-card {
+    animation: float 6s ease-in-out infinite 3s;
+}
+
+/* 3. 背景透明度样式 */
+#entry-card .card-background {
+    border-radius: 73% 27% 56% 44% / 30% 62% 38% 70%;
+}
+#entry-card .card-background::before {
+    background: linear-gradient(135deg, rgba(232, 223, 223, 0.25) 0%, rgba(232, 223, 223, 0.40) 100%);
+    animation-duration: 15s;
+    animation-delay: 1s;
+}
+
+/* 4. 内容与标题样式 */
+.entry-box {
+    text-align: center;
+    padding: 20px 0;
+}
+.entry-main-title {
+    font-family: 'NotoSansBold', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 3.5rem);
+    color: var(--brand-beige);
+    margin: 0;
+    line-height: 1.2;
+}
+.entry-sub-title {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: var(--brand-beige);
+    opacity: 0.9;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+
+
+
+/* --- 方案一：柔和圆润风 --- */
+
+/* 5. 按钮容器与按钮样式 */
+.entry-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.entry-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: clamp(280px, 40%, 320px);
+    height: 80px;
+    padding: 10px;
+    
+    /* 核心修改：胶囊形状与更柔和的渐变 */
+    border-radius: 50px; 
+    background: linear-gradient(135deg, #d41e2f, #a10818);
+    color: #ffffff;
+    text-decoration: none;
+    
+    overflow: hidden;
+    border: none; /* 移除了边框 */
+    
+    /* 核心修改：更柔和的初始阴影 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.entry-btn .btn-main-text {
+    font-family: 'NotoSansBold', sans-serif;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    line-height: 1.2;
+}
+.entry-btn .btn-sub-text {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
+    opacity: 0.7;
+}
+
+/* 核心修改：悬停时产生柔和的红色辉光 */
+.entry-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(203, 10, 29, 0.5); /* 阴影颜色与按钮匹配 */
+}
+
+/* (这个方案中 before 伪元素未被使用，可以留空或删除) */
+.entry-btn::before {
+    content: '';
+}
+.entry-btn:hover::before {
+    content: '';
+}
+
+
+
+
+
+
+
+
+
+/* 6. 移动端适配 */
+@media (max-width: 768px) {
+    #entry-section .content-container {
+        position: static; /* 在移动端恢复正常文档流 */
+        transform: none;
+        width: 90%;
+        padding: 100px 0; /* 在移动端增加上下内边距来撑开空间 */
+    }
+    .entry-button-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    .entry-btn {
+        width: 90%;
+        max-width: 350px;
+        height: 70px;
+    }
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+ 
         .site-header nav {
             display: flex; justify-content: space-between; align-items: center;
             height: 100%; max-width: 1200px; margin: 0 auto;
@@ -177,6 +346,31 @@
         }
         .mobile-nav-overlay a:hover { color: var(--brand-red); }
 
+        /* --- 按钮样式 --- */
+        .custom-btn {
+            display: inline-block;
+            background-color: var(--brand-red);
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: 'NotoSansMedium', sans-serif;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border: 1px solid var(--brand-red);
+            margin-top: 20px;
+        }
+        .custom-btn:hover {
+            background-color: #ffffff;
+            color: var(--brand-red);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        /* --- 无阴影样式 --- */
+        .text-shadow-none {
+            text-shadow: none;
+        }
 
         /* --- Section 布局 --- */
         .section { display: block; position: relative; width: 100%; padding: 0; line-height: 0; }
@@ -184,6 +378,146 @@
         .content-section { background-color: var(--brand-red); padding: 20px; margin-top: -1px; position: relative; z-index: 5; }
         .content-container { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; z-index: 10; }
         
+		
+/* --- Message区域样式最终修正 --- */
+
+/* 容器设置 (保持不变) */
+#message-card .message-box {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* 强制让副标题和段落靠左 (保持不变) */
+#message-card .message-box h3,
+#message-card .message-box p {
+    text-align: left;
+}
+
+
+/* --- 下面是间距控制的核心代码 --- */
+
+/* 1. 移除 "Message" 标题自身的下边距 */
+#message-card .section-title {
+    margin-bottom: 0;
+}
+
+/* 2. 大幅减小标题内部横线的上边距 */
+#message-card .section-title hr {
+    margin-top: 0px; /* 保留5px让文字和横线分开，可设为0 */
+}
+
+/* 3. 用副标题的上边距作为唯一的“距离控制器” */
+#message-card .message-box h3 {
+    /* ↓↓↓ 请在这里微调你想要的最终距离！ ↓↓↓ */
+    margin-top: -10px;
+}
+		
+ 
+/* 1. 将卡片内容区设置为Flexbox布局并整体上移 */
+#interview-card .card-content {
+    display: flex;               
+    flex-direction: column;     /* 让内容垂直排列 */
+    transform: translateY(-80px); /* 整体上移效果，可调整 */
+}
+
+/* 2. 让标题居中、单独上移，并为背景做准备 */
+#interview-card .section-title {
+    align-self: center;           /* 在Flex容器中自我居中 */
+    transform: translateY(-90px); /* 标题自己再额外上移，可调整 */
+    position: relative;
+    padding: 10px 20px;
+    z-index: 1;
+}
+
+/* 3. 创建标题背后的小的动态背景 (保持不变) */
+#interview-card .section-title::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 110%;
+    height: 140%;
+    top: -20%;
+    left: -5%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(5px);
+    animation: morphing 8s ease-in-out infinite;
+    border-radius: 30% 70% 40% 60% / 60% 40% 60% 40%;
+}
+
+
+ /* --- "募集コース一覧" 区域样式调整 (同Message区域) --- */
+
+/* 1. 调整内容区域的整体布局和宽度，并让标题居中 */
+#profile-card .profile-box {
+    width: 80%;          /* 设置宽度为原来的80% */
+    margin: 0 auto;      /* 让这个80%宽度的容器在卡片中居中 */
+    text-align: center;  /* 让标题 "募集コース一覧" 居中 */
+	transform: translateY(-50px);
+}
+
+#profile-card .profile-box .sub-header,
+#profile-card .profile-box .job-listing {
+    text-align: left;
+    transform: translateY(-30px);  
+}
+ 
+/* --- 按钮最终样式 (终极修正版) --- */
+
+/* 1. 按钮主体样式 */
+.custom-btn,
+.job-detail-btn {
+    position: relative;     /* 为图标定位提供基准 */
+    isolation: isolate;     /* 关键：创建一个独立的图层世界，让z-index:-1能正常工作 */
+    
+    padding: 10px 25px 10px 160px; 
+    border-radius: 999px;
+    
+    display: inline-block;
+    text-decoration: none;
+    font-size: 14px;
+    color: #ffffff;
+    background: linear-gradient(45deg, #e52d27, #b31217);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+    white-space: nowrap;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* 2. 图标样式 */
+.custom-btn::before,
+.job-detail-btn::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    z-index: -1; /* 关键：命令图标待在文字内容的后面，但又在按钮背景的前面 */
+
+    width: 130px;  
+    height: 130px; 
+    
+    background-image: url('Mynavi_Logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+/* 3. 鼠标悬停效果 */
+.custom-btn:hover,
+.job-detail-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: #ffffff;  
+}
+
+.custom-btn:hover::before,
+.job-detail-btn:hover::before {
+    transform: translateY(-50%) rotate(-10deg) scale(1.1);
+}
+
         /* --- 为所有文字添加的强阴影样式 --- */
         .text-shadow-strong {
             text-shadow: 0px 5px 20px rgba(0, 0, 0, 0.8);
@@ -211,7 +545,7 @@
             animation: float 4s ease-in-out infinite 0.2s;
         }
         #hero .content-container {
-            position: absolute; top: 65%; left: 50%;
+            position: absolute; top: 57%; left: 50%;
             transform: translate(-50%, -50%); width: 90%;
             text-align: center; padding: 0 20px;
         }
@@ -252,23 +586,39 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
         }
         .card-background::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(232, 223, 223, 0.25) 0%, rgba(232, 223, 223, 0.40) 100%), rgba(232, 223, 223, 0.85);
-            border-radius: inherit; animation: morphing 10s linear infinite;
-        }
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(232, 223, 223, 0.25) 0%, rgba(232, 223, 223, 0.40) 100%);
+    border-radius: inherit; animation: morphing 10s linear infinite;
+}
         .card-content { position: relative; z-index: 2; padding: 30px 20px; }
         #message-card { animation: float 6s ease-in-out infinite; }
         #message-card .card-background { border-radius: 25% 75% 30% 70% / 70% 25% 75% 25%; }
         #message-card .card-background::before { animation-duration: 12s; }
-        #interview-card { animation: float 6s ease-in-out infinite 1s; }
-        #interview-card .card-background { border-radius: 75% 25% 80% 20% / 30% 70% 30% 70%; }
-        #interview-card .card-background::before { animation-duration: 8s; animation-delay: 1s; }
+        
+    
+ /* --- "楽しむのカタチ" 卡片最终样式 --- */
+#interview-card {
+    animation: float 6s ease-in-out infinite 1s;
+}
+#interview-card .card-background {
+    border-radius: 42% 58% 68% 32% / 61% 45% 55% 39%;
+}
+#interview-card .card-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(232, 223, 223, 0.25) 0%, rgba(232, 223, 223, 0.40) 100%);
+    animation: morphing 10s linear infinite;
+    border-radius: inherit;
+}
+
         #profile-card { animation: float 6s ease-in-out infinite 2s; }
         #profile-card .card-background { border-radius: 20% 80% 30% 70% / 75% 25% 70% 30%; }
         #profile-card .card-background::before { animation-duration: 14s; animation-delay: 0.5s; }
-        #entry-card { animation: float 6s ease-in-out infinite 3s; }
-        #entry-card .card-background { border-radius: 70% 30% 75% 25% / 30% 70% 25% 75%; }
-        #entry-card .card-background::before { animation-duration: 11s; animation-delay: 1.5s; }
+
         .section-title {
             font-family: 'NotoSansBold', sans-serif; font-size: clamp(1.8rem, 6vw, 3.5rem);
             color: var(--brand-beige); margin-bottom: 30px; position: relative;
@@ -291,23 +641,24 @@
         .interview-card-content { padding: 15px; }
         .interview-card p { margin: 0; line-height: 1.5; }
         .member-year { font-size: 0.8rem; color: #777; }
-        .member-name { font-family: 'NotoSansBold', sans-serif; font-size: clamp(1rem, 3vw, 1.5rem); margin-top: 8px; }
+        .member-name { font-family: 'NotoSansBold', sans-serif; font-size: clamp(1rem, 3vw, 1.5rem); margin-top: 8px; text-shadow: none; }
         .member-name span { display: block; font-size: clamp(0.8rem, 2.5vw, 1rem); font-family: 'NotoSansMedium', sans-serif; color: var(--brand-red); }
         .member-group { font-size: clamp(0.7rem, 2vw, 0.9rem); margin-top: 12px; }
         #profile .profile-box { text-align: left; }
+
         #profile .sub-header {
             font-size: clamp(0.8rem, 2.5vw, 1rem); line-height: 1.6;
             margin-top: -10px; margin-bottom: 30px; position: relative; z-index: 1;
         }
         .job-listing { border-top: 1px solid rgba(18, 18, 18, 0.2); padding: 20px 0; position: relative; z-index: 1; }
         .job-listing:last-child { border-bottom: 1px solid rgba(18, 18, 18, 0.2); }
-        .job-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .job-header { display: flex; align-items: flex-start; gap: 15px; flex-wrap: wrap; align-items: center; }
         .job-tag {
             background-color: var(--brand-red); color: white; padding: 5px 12px;
             border-radius: 20px; font-size: clamp(0.7rem, 2vw, 0.9rem);
             font-family: 'NotoSansBold', sans-serif; white-space: nowrap;
         }
-        .job-title { font-family: 'NotoSansBold', sans-serif; font-size: clamp(1rem, 3.5vw, 1.5rem); margin: 0; flex: 1; }
+        .job-title { font-family: 'NotoSansBold', sans-serif; font-size: clamp(1rem, 3.5vw, 1.5rem); margin: 0; flex: 1; text-shadow: none; }
         .job-locations { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 15px; }
         .job-locations strong { font-family: 'NotoSansBold', sans-serif; font-size: clamp(0.8rem, 2.5vw, 1rem); }
         .location-tag { background-color: #f0f0f0; padding: 4px 8px; border-radius: 15px; font-size: clamp(0.7rem, 2vw, 0.9rem); }
@@ -317,13 +668,7 @@
             padding: 6px 15px; border-radius: 25px; font-family: 'NotoSansBold', sans-serif;
             font-size: clamp(0.7rem, 2vw, 0.9rem);
         }
-        #entry-card .entry-box { text-align: center; }
-        #entry-card .link-logo img { max-width: 600px; width: 90%; margin: 0 auto; position: relative; z-index: 1; }
-        #entry-card .link-sub-title {
-            margin-top: 15px; font-size: clamp(0.9rem, 3vw, 1.2rem); font-weight: bold;
-            text-align: center; letter-spacing: 0.5em; color: var(--deep-gray); position: relative; z-index: 1;
-        }
-        .button-container { display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap; position: relative; z-index: 1; }
+        .button-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; position: relative; z-index: 1; }
         .recruit-btn {
             display: inline-block; width: 100%; max-width: 300px; height: 60px;
             font-size: clamp(1rem, 3vw, 1.3rem); font-family: 'NotoSansBold', sans-serif;
@@ -369,6 +714,11 @@
 
         /* --- 移动端最终整合修复 --- */
         @media (max-width: 768px) {
+            .site-header::before {
+                /* 在移动端移除波浪效果，以保证布局不乱 */
+                clip-path: none;
+                animation: none;
+            }
 		/* --- 移动端 Recruit 标签调整 --- */
     .recruit-label {
         top: 80px;    /* 移动端距离顶部更近 (例如，PC端是120px) */
@@ -550,29 +900,32 @@
                     <div class="card-background"></div>
                     <div class="card-content interview-box">
                         <h2 class="section-title text-shadow-strong">楽しむのカタチ<hr></h2>
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <a href="https://job.mynavi.jp/26/pc/corpinfo/displayPremium/index?corpId=72594&optNo=128933" target="_blank" rel="noopener noreferrer" class="custom-btn">社員インタビューをもっと見る</a>
+                        </div>
                         <div class="interview-grid">
                             <a href="https://www.i-enter.co.jp/recruit/interview/4/" class="interview-card">
                                 <img src="004.jpg" alt="須見 祐介">
                                 <div class="interview-card-content">
-                                    <p class="member-year text-shadow-strong">2018年 新卒入社</p>
-                                    <p class="member-name text-shadow-strong">須見 祐介 <span>YUSUKE SUSAMI</span></p>
-                                    <p class="member-group text-shadow-strong">DXP事業本部　マリンテック事業部</p>
+                                    <p class="member-year">2018年 新卒入社</p>
+                                    <p class="member-name text-shadow-none">須見 祐介 <span>YUSUKE SUSAMI</span></p>
+                                    <p class="member-group">DXP事業本部　マリンテック事業部</p>
                                 </div>
                             </a>
                             <a href="https://www.i-enter.co.jp/recruit/interview/2/" class="interview-card">
                                 <img src="005.jpg" alt="遠藤 由奈">
                                 <div class="interview-card-content">
-                                    <p class="member-year text-shadow-strong">2017年 新卒入社</p>
-                                    <p class="member-name text-shadow-strong">遠藤 由奈 <span>YUINA ENDO</span></p>
-                                    <p class="member-group text-shadow-strong">テクノロジー本部　プロジェクト推進ユニット</p>
+                                    <p class="member-year">2017年 新卒入社</p>
+                                    <p class="member-name text-shadow-none">遠藤 由奈 <span>YUINA ENDO</span></p>
+                                    <p class="member-group">テクノロジー本部　プロジェクト推進ユニット</p>
                                 </div>
                             </a>
                             <a href="https://www.i-enter.co.jp/recruit/interview/3/" class="interview-card">
                                 <img src="003.jpg" alt="直井 俊樹">
                                 <div class="interview-card-content">
-                                    <p class="member-year text-shadow-strong">2013年 新卒入社</p>
-                                    <p class="member-name text-shadow-strong">直井 俊樹 <span>TOSHIKI NAOI</span></p>
-                                    <p class="member-group text-shadow-strong">テクノロジー本部　Webアプリユニット</p>
+                                    <p class="member-year">2013年 新卒入社</p>
+                                    <p class="member-name text-shadow-none">直井 俊樹 <span>TOSHIKI NAOI</span></p>
+                                    <p class="member-group">テクノロジー本部　Webアプリユニット</p>
                                 </div>
                             </a>
                         </div>
@@ -595,33 +948,35 @@
                         
                         <div class="job-listing">
                             <div class="job-header">
-                                <span class="job-tag text-shadow-strong">正社員</span>
-                                <h3 class="job-title text-shadow-strong">DXコンサルタント職</h3>
+                                <span class="job-tag text-shadow-none">正社員</span>
+                                <h3 class="job-title text-shadow-none">DXコンサルタント職</h3>
+                                <a href="https://job.mynavi.jp/26/pc/corpinfo/displayEmployment/index/?corpId=72594&recruitingCourseId=26030894" target="_blank" rel="noopener noreferrer" class="job-detail-btn">DXコンサルタント 募集要項を見る</a>
                             </div>
                             <div class="job-locations">
                                 <strong>勤務地</strong>
-                                <span class="location-tag text-shadow-strong">東京都</span>
-                                <span class="location-tag text-shadow-strong">大阪府</span>
+                                <span class="location-tag text-shadow-none">東京都</span>
+                                <span class="location-tag text-shadow-none">大阪府</span>
                             </div>
                             <p class="job-description">
-                                お客様の課題をヒアリングし、課題解決のためのDXコンサルティング営業やシステム開発提案、自社サービスの導入提案をおこないます。会社の成長にダイレクトにかかわることができます。
+                                お客様の課題をヒアリングし、課題解決のためのDXコンサルティング営業やシステム開発提案、自社サービスの導入提案をおこないます。公司的成长直接受到影响。
                             </p>
                             <div class="job-status">正社員応募受付終了</div>
                         </div>
 
                         <div class="job-listing">
                             <div class="job-header">
-                                <span class="job-tag text-shadow-strong">正社員</span>
-                                <h3 class="job-title text-shadow-strong">システムエンジニア職</h3>
+                                <span class="job-tag text-shadow-none">正社員</span>
+                                <h3 class="job-title text-shadow-none">システムエンジニア職</h3>
+                                <a href="https://job.mynavi.jp/26/pc/corpinfo/displayEmployment/index/?corpId=72594&recruitingCourseId=26030883" target="_blank" rel="noopener noreferrer" class="job-detail-btn">システムエンジニア 募集要項を見る</a>
                             </div>
                             <div class="job-locations">
                                 <strong>勤務地</strong>
-                                <span class="location-tag text-shadow-strong">北海道</span>
-                                <span class="location-tag text-shadow-strong">宮城県</span>
-                                <span class="location-tag text-shadow-strong">東京都</span>
-                                <span class="location-tag text-shadow-strong">大阪府</span>
-                                <span class="location-tag text-shadow-strong">福岡県</span>
-                                <span class="location-tag text-shadow-strong">沖縄県</span>
+                                <span class="location-tag text-shadow-none">北海道</span>
+                                <span class="location-tag text-shadow-none">宮城県</span>
+                                <span class="location-tag text-shadow-none">東京都</span>
+                                <span class="location-tag text-shadow-none">大阪府</span>
+                                <span class="location-tag text-shadow-none">福岡県</span>
+                                <span class="location-tag text-shadow-none">沖縄県</span>
                             </div>
                             <p class="job-description">
                                 Web・業務系アプリ開発やスマホアプリ開発、クラウドの設計構築、RPA・ノーコード/ローコード開発などをおこないます。最先端技術(AI、IoT、XR)の研究開発をおこなうチームもございます。
@@ -632,27 +987,40 @@
             </div>
         </section>
 
-        <section id="entry-bg" class="section">
-            <img src="005.jpg" alt="アイエンターの社内風景 3" class="section-background-image">
-        </section>
 
-        <section class="content-section">
-            <div class="content-container">
-                <div id="entry-card" class="floating-card">
-                    <div class="card-background"></div>
-                    <div class="card-content entry-box">
-                        <div class="link-logo">
-                            <img src="https://www.i-enter.co.jp/recruit/img/recruit_copy_logo.svg" alt="Let's have fun.">
-                            <p class="link-sub-title text-shadow-strong">楽しむを世界へ</p>
-                        </div>
-                        <div class="button-container">
-                            <a href="https://job.mynavi.jp/26/pc/search/corp72594/outline.html" target="_blank" rel="noopener noreferrer" class="recruit-btn">新卒採用</a>
-                            <a href="https://www.i-enter.co.jp/recruit/mid-career/" class="recruit-btn">キャリア採用</a>
-                        </div>
-                    </div>
+
+
+
+<section id="entry-section" class="section">
+    <img src="005.jpg" alt="アイエンターの社内風景 3" class="section-background-image">
+    <div class="content-container">
+        <div id="entry-card" class="floating-card">
+            <div class="card-background"></div>
+            
+            <div class="card-content entry-box">
+                <h2 class="entry-main-title text-shadow-strong">楽しむを世界へ</h2>
+                <p class="entry-sub-title text-shadow-strong">Let's have fun</p>
+
+                <div class="entry-button-container">
+                    <a href="https://job.mynavi.jp/26/pc/search/corp72594/outline.html" target="_blank" rel="noopener noreferrer" class="entry-btn">
+                        <span class="btn-main-text">新卒採用</span>
+                        <span class="btn-sub-text">New Graduate</span>
+                    </a>
+                    <a href="https://www.i-enter.co.jp/recruit/mid-career/" class="entry-btn">
+                        <span class="btn-main-text">キャリア採用</span>
+                        <span class="btn-sub-text">Mid-Career</span>
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
     </main>
 
     <footer class="site-footer">
@@ -681,7 +1049,7 @@
             </div>
         </div>
         <div class="copyright text-shadow-strong">
-            © 2024 i-enter Corporation,Ltd.
+            © 2025 i-enter Corporation,Ltd. 
         </div>
     </footer>
 
@@ -722,40 +1090,56 @@
                 });
             });
 
-            function updateOnScroll() {
-                const scrollY = window.scrollY;
-                
-                if (scrollY > 80) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
+function updateOnScroll() {
+    const scrollY = window.scrollY;
 
-                // 检查是否为移动设备，如果是则减少滚动效果
-                const isMobile = window.innerWidth <= 768;
-                
-                if(heroTextContainer && scrollY < window.innerHeight && !isMobile) {
-                    const progress = scrollY / (window.innerHeight * 0.5);
-                    const opacity = Math.max(0, 1 - progress);
-                    const translateY = scrollY * 0.3;
-                    
-                    heroTextContainer.style.opacity = opacity;
-                    heroTextContainer.style.transform = `translateY(${translateY}px)`;
-                }
+    // --- 在这里微调消失的时机和过程 ---
+    const startFade = 400;
+    const fadeDuration = 1200;
 
-                if(recruitLabel && scrollY < window.innerHeight && !isMobile) {
-                    const progress = scrollY / (window.innerHeight * 0.5);
-                    const opacity = Math.max(0, 1 - progress);
-                    const translateY = scrollY * 0.25;
-                    
-                    recruitLabel.style.opacity = opacity;
-                    recruitLabel.style.transform = `translateY(${translateY}px)`;
-                }
-                
-                lastScrollY = scrollY;
-                ticking = false;
-            }
-            
+
+    // --- 下面的代码会自动根据上面的两个变量进行计算，无需修改 ---
+    // 1. 计算当前滚动位置在“消失区段”内的进度
+    const scrollInFadeZone = Math.max(0, scrollY - startFade);
+    
+    // 2. 根据进度计算透明度（0.0 ~ 1.0）
+    const progress = Math.min(1, scrollInFadeZone / fadeDuration);
+    const opacity = 1 - progress;
+
+    // 设置整个 header 元素的透明度
+    header.style.opacity = opacity;
+
+    // 当 header 完全透明时，让它可以被“点击穿透”
+    if (opacity <= 0) {
+        header.style.pointerEvents = 'none';
+    } else {
+        header.style.pointerEvents = 'auto';
+    }
+    
+
+    // --- 保留页面其他部分的滚动动画 ---
+    const isMobile = window.innerWidth <= 768;
+    
+    if(heroTextContainer && scrollY < window.innerHeight && !isMobile) {
+        const heroProgress = scrollY / (window.innerHeight * 0.5);
+        const heroOpacity = Math.max(0, 1 - heroProgress);
+        const heroTranslateY = scrollY * 0.3;
+        heroTextContainer.style.opacity = heroOpacity;
+        heroTextContainer.style.transform = `translateY(${heroTranslateY}px)`;
+    }
+
+    if(recruitLabel && scrollY < window.innerHeight && !isMobile) {
+        const labelProgress = scrollY / (window.innerHeight * 0.5);
+        const labelOpacity = Math.max(0, 1 - labelProgress);
+        const labelTranslateY = scrollY * 0.25;
+        recruitLabel.style.opacity = labelOpacity;
+        recruitLabel.style.transform = `translateY(${labelTranslateY}px)`;
+    }
+    
+    lastScrollY = scrollY;
+    ticking = false;
+}
+
             function requestTick() {
                 if (!ticking) {
                     window.requestAnimationFrame(updateOnScroll);
