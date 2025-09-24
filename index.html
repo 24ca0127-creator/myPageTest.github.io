@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ways to Work Fun - i-enter Corporation Recruitment</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
+
+
+
+
+
+
+
         /* --- 变量与全局设置 --- */
         :root {
             --brand-red: #cb0a1d;
@@ -13,24 +21,8 @@
             --header-height: 80px;
             --header-height-mobile: 60px;
         }
-
-        /* --- 字体引入 --- */
-        @font-face {
-            font-family: 'NotoSansMedium';
-            src: url('https://www.i-enter.co.jp/_next/static/media/NotoSansCJKjp-Medium.b565dc40.woff') format('woff');
-            font-weight: 500;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'NotoSansBold';
-            src: url('https://www.i-enter.co.jp/_next/static/media/NotoSansCJKjp-Black.6e24824a.woff') format('woff');
-            font-weight: 900;
-            font-style: normal;
-            font-display: swap;
-        }
-        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
         /* --- 基础样式 --- */
         * {
             box-sizing: border-box;
@@ -46,6 +38,10 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+
+
+
 
         /* --- 动画关键帧 --- */
         @keyframes morphing {
@@ -462,6 +458,20 @@
     transform: translateY(-30px);  
 }
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 /* --- 按钮最终样式 (终极修正版) --- */
 
 /* 1. 按钮主体样式 */
@@ -513,10 +523,28 @@
     color: #ffffff;  
 }
 
-.custom-btn:hover::before,
+.custom-btn:hover::before, 
+
 .job-detail-btn:hover::before {
     transform: translateY(-50%) rotate(-10deg) scale(1.1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /* --- 为所有文字添加的强阴影样式 --- */
         .text-shadow-strong {
@@ -700,20 +728,216 @@
         .social-icons a:hover img { opacity: 1; }
         .copyright { width: 100%; text-align: center; margin-top: 40px; font-size: clamp(0.7rem, 2vw, 0.8rem); color: #777; }
         
+		
+		
+		/* --- 页脚简洁优化 --- */
+.footer-content {
+    padding: 50px 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column {
+    flex: 1;
+    max-width: 300px;
+}
+
+.footer-column h4 {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: var(--brand-beige);
+    font-weight: 600;
+}
+
+.footer-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-column a {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: var(--brand-beige);
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+}
+
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(232, 223, 223, 0.2);
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        padding: 40px 20px 20px;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+}
+		
+		
+		
+		
+		
+		
         /* --- 媒体查询 (中等屏幕) --- */
         @media (max-width: 1024px) {
             .site-header { padding: 0 30px; }
             .floating-card { margin-top: -10vh; margin-bottom: -15vh; }
             .card-content { padding: 40px 30px; }
         }
+		
+		
+		
+		
+		
+		
+		
+		
+		
         
         @media (max-width: 900px) { 
             .header-actions { gap: 10px; }
-            .language-switch { display: none; }
+            .language-switch { display: none !important; }
         }
+		.language-switch { display: none !important; }
 
-        /* --- 移动端最终整合修复 --- */
-        @media (max-width: 768px) {
+ 
+		
+/* --- 最终修复方案：提升优先级 --- */
+@media (max-width: 768px) {
+    /* ... 你的其他移动端样式 ... */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.custom-btn,
+.job-detail-btn {
+    display: flex !important;
+    flex-direction: row !important; 
+    justify-content: flex-start !important;
+    align-items: center !important;
+    
+    padding: 8px 15px !important;
+    width: 110% !important;
+    max-width: 800px !important;
+    height: 30px !important;
+    white-space: nowrap !important;
+    gap: 12px !important;
+}
+
+.custom-btn::before,
+.job-detail-btn::before {
+    position: static !important;
+    transform: none !important;
+    width: 80px !important;  /* 确保这里也是80px */
+    height: 80px !important; /* 确保这里也是80px */
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+    .custom-btn .btn-main-text,
+    .job-detail-btn .btn-main-text {
+        text-align: center !important;
+        font-size: 1rem !important;
+        padding: 0 !important;
+        margin-top: 5px !important;
+    }
+		
+		
+		
+		
+		
+/* --- 移动端卡片背景形状修正 --- */
+#message-card .card-background {
+    border-radius: 46%;
+}
+#interview-card .card-background {
+    border-radius: 46%;
+}
+#profile-card .card-background {
+    border-radius: 46%;
+}
+#entry-card .card-background {
+    border-radius: 46%;
+}
+	
+	
+#interview-card .card-background {
+    border-radius: 50%; /* 确保卡片背景完全圆润 */
+    animation: none; /* 禁用动态动画 */
+}
+
+/* 确保其伪元素也没有动画 */
+#interview-card .card-background::before {
+    animation: none;
+    border-radius: 46%;
+}	
+	
+	
+	
+	
             .site-header::before {
                 /* 在移动端移除波浪效果，以保证布局不乱 */
                 clip-path: none;
@@ -788,10 +1012,73 @@
             .nav-links {
                 display: none; /* 在手机端隐藏PC导航 */
             }
-            .mobile-menu-toggle {
-                display: flex; /* 在手机端显示汉堡按钮 */
-            }
-        }
+
+
+
+
+
+.mobile-menu-toggle {
+    display: flex; /* 在手机端显示汉堡按钮 */
+}
+
+/* --- 【追加修正】社員インタビューボタンのモバイル表示最適化 --- */
+#interview-card .custom-btn {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    max-width: 280px !important; /* ボタンが横に広がりすぎるのを防ぐ */
+    gap: 5px !important; /* 画像とテキストの間の垂直方向の隙間を定義 */
+}
+
+#interview-card .custom-btn::before {
+    width: 80px !important; 
+    height: 80px !important;
+    margin-bottom: 0 !important; 
+}
+
+/* 单独修改募集要項按钮的宽度 */
+.job-detail-btn {
+    width: 240px !important;
+    max-width: 240px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 修改社員インタビュー按钮文字 */
+.custom-btn {
+    font-size: 0 !important;
+}
+
+.custom-btn::after {
+    content: "      インタビューをもっと見る" !important;
+    font-size: 14px !important;
+    color: #ffffff !important;
+}
+
+/* 修改募集要項按钮文字 */
+.job-detail-btn {
+    font-size: 0 !important;
+}
+
+.job-detail-btn::after {
+    content: "      募集要項を見る" !important;
+    font-size: 14px !important;
+    color: #ffffff !important;
+}
+
+
+
+
+
+
+
 
         /* --- 触摸设备优化 --- */
         @media (hover: none) and (pointer: coarse) {
@@ -1034,19 +1321,13 @@
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>公式SNS</h4>
-                <div class="social-icons">
-                    <a href="https://twitter.com/ienter_official" target="_blank" rel="noopener noreferrer">
-                        <img src="https://www.i-enter.co.jp/_next/static/media/X_logo.b8212f37.svg" alt="X">
-                    </a>
-                    <a href="https://www.facebook.com/ienter.corporation/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://www.i-enter.co.jp/_next/static/media/fb_logo.f2a588da.svg" alt="Facebook">
-                    </a>
-                    <a href="https://www.youtube.com/channel/UCxXNPn3wvSh1DWCjG-pXFVA" target="_blank" rel="noopener noreferrer">
-                        <img src="https://www.i-enter.co.jp/_next/static/media/YouTube_logo.e3871587.svg" alt="YouTube">
-                    </a>
-                </div>
-            </div>
+    <h4>公式SNS</h4>
+    <ul>
+        <li><a href="https://twitter.com/ienter_official" target="_blank"><i class="fab fa-twitter"></i> X</a></li>
+        <li><a href="https://www.facebook.com/ienter.corporation/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+        <li><a href="https://www.youtube.com/channel/UCxXNPn3wvSh1DWCjG-pXFVA" target="_blank"><i class="fab fa-youtube"></i> YouTube</a></li>
+    </ul>
+</div>
         </div>
         <div class="copyright text-shadow-strong">
             © 2025 i-enter Corporation,Ltd. 
